@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        move();
+        Move();
     }
 
     void FixedUpdate()
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
         ApplyMovement();    
     }
 
-    private void move()
+    private void Move()
     {
         inputHorizontal = Input.GetAxis("Horizontal");
         inputVertical = Input.GetAxis("Vertical");

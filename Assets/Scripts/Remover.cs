@@ -1,11 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Remover : MonoBehaviour
 {
+    [SerializeField] private string filterTag;
+    private int removedEnemies = 0;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(collision.gameObject);
+        if (filterTag == null || filterTag == "")
+        {
+            Destroy(collision.gameObject);
+        }
+        else
+        {
+            if (collision.gameObject.tag == filterTag)
+            {
+                Destroy(collision.gameObject);
+            }
+        }
     }
 }
