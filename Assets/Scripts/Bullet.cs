@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
     private Rigidbody2D rb;
 
+    public int damage = 1;
     public float speed;
     public string shooterTag;
 
@@ -20,6 +21,6 @@ public class Bullet : MonoBehaviour
 
     private void ApplyMovement()
     {
-        rb.velocity = Vector2.right * speed;
+        rb.velocity = transform.right * speed;
     }
 }

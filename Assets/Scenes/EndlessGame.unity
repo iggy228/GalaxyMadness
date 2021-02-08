@@ -1185,7 +1185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373d92e0951fb2b409b529b565dbbc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max: 0
+  max: 1
 --- !u!1 &1656808342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,6 +1271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressDot: {fileID: 1599473951}
+  nextWave: 0
   waves:
   - name: Normal Wave
     enemy: {fileID: 6297092174167120811, guid: e2ed2917941186e46b1555a3138c97b6, type: 3}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ProgressDot : MonoBehaviour
 {
-    public int max;
+    public int max = 0;
 
     private int progress = 0;
     
@@ -33,9 +33,8 @@ public class ProgressDot : MonoBehaviour
     private void UpdatePosition()
     {
         transform.position = new Vector2(
-            position.x + (4f * progress / max),
+            max <= 0 ? position.x : position.x + (4f * progress / max),
             position.y
         );
-        Debug.Log(position);
     }
 }

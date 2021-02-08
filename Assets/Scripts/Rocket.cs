@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class Rocket : MonoBehaviour
+public class Rocket : Enemy
 {
     private Rigidbody2D rb;
 
-    [SerializeField] private GameObject explosionObject;
     [SerializeField] private float speed = 4f;
+    [SerializeField] private GameObject explosionObject;
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
@@ -18,19 +18,23 @@ public class Rocket : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.tag == "Bullet")
         {
-            // Delete incoming bullet
-            if (collision.gameObject.tag == "Bullet")
+            if (collision.gameObject.GetComponent<Bullet>().shooterTag == "Player")
             {
                 Destroy(collision.gameObject);
+                health -= collision.gameObject.GetComponent<Bullet>().damage;
             }
+        }
 
+        if (collision.gameObject.tag == "Player" || health <= 0)
+        {
             Destroy(this.gameObject);
 
             GameObject explosion = Instantiate(explosionObject, transform.position, Quaternion.identity);
             Destroy(explosion, 1.5f);
         }
+
     }
 
     private void OnDestroy()

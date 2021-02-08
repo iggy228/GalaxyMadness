@@ -16,7 +16,7 @@ public class WaveSpawner : MonoBehaviour
 
     [SerializeField] private ProgressDot progressDot;
 
-    private int nextWave = 0;
+    [SerializeField] private int nextWave = 0;
     private BoxCollider2D box;
 
     public Wave[] waves;
@@ -53,7 +53,7 @@ public class WaveSpawner : MonoBehaviour
             }
         }
 
-        if (waveCountdown <= 0f)
+        if (waveCountdown <= 0f && nextWave < waves.Length)
         {
             if (state != SpawnState.SPAWNING)
             {
@@ -63,6 +63,10 @@ public class WaveSpawner : MonoBehaviour
                 StartCoroutine( SpawnWave(waves[nextWave]) );
             }
             waveCountdown = timeBetweenWaves;
+        }
+        else if (nextWave >= waves.Length)
+        {
+            // TODO make ending scene maybe
         }
         else
         {
@@ -96,10 +100,16 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnEnemy(GameObject enemy)
     {
-        Vector2 position = new Vector2(
-            Random.Range(transform.position.x - box.bounds.size.x / 2, transform.position.x + box.bounds.size.x / 2),
-            Random.Range(transform.position.y - box.bounds.size.y / 2, transform.position.y + box.bounds.size.y / 2)
-        );
+        Vector2 position = transform.position;
+        
+        if (enemy.tag != "Boss") 
+        { 
+            position = new Vector2(
+                Random.Range(transform.position.x - box.bounds.size.x / 2, transform.position.x + box.bounds.size.x / 2),
+                Random.Range(transform.position.y - box.bounds.size.y / 2, transform.position.y + box.bounds.size.y / 2)
+            );
+        }
+        
         Instantiate(enemy, position, Quaternion.identity);
     }
 }

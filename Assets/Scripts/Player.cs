@@ -13,13 +13,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Text healthText;
 
     private float m_bulletDelay;
-    private float killCount = 0;
-
-
-    public void addKill()
-    {
-        killCount++;
-    }
 
     private void Start()
     {
@@ -42,9 +35,20 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            health--;
-            healthText.text = health.ToString();
-        }    
+            health -= collision.gameObject.GetComponent<Enemy>().GetDamage();
+        }
+
+        if (collision.gameObject.tag == "Bullet")
+        {
+            if (collision.gameObject.GetComponent<Bullet>().shooterTag != "Player")
+            {
+                Destroy(collision.gameObject);
+                health -= collision.gameObject.GetComponent<Bullet>().damage;
+            }
+        }
+
+        healthText.text = health.ToString();
+
     }
 
     private void Shot()
@@ -54,9 +58,10 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 m_bulletDelay = bulletDelay;
-                GameObject bullet = Instantiate(bulletObject, transform.position, Quaternion.identity);
-                bullet.GetComponent<Bullet>().speed = bulletSpeed;
-                bullet.GetComponent<Bullet>().shooterTag = gameObject.tag;
+                GameObject bulletClone = Instantiate(bulletObject, transform.position, Quaternion.identity);
+                Bullet bullet = bulletClone.GetComponent<Bullet>();
+                bullet.speed = bulletSpeed;
+                bullet.shooterTag = tag;
             }
         }
         else
